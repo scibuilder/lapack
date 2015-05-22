@@ -9,6 +9,7 @@
 include(ExternalProject)
 include(ElCheckFunctionExists)
 
+# TODO: Switch to detecting the OpenMP Fortran flags instead
 find_package(OpenMP)
 
 # Default locations (currently, Linux-centric) for searching for math libs
@@ -74,10 +75,10 @@ endif()
 
 if(HAVE_BLIS)
   set(BLIS_LIBS ${BLIS} ${GNU_ADDONS})
-  if(HAVE_DGEMM_POST_BLIS)
-    set(BLIS_LINK_FLAGS)
+  if(HAVE_DGEMM_OPENMP_BLIS)
+    set(BLIS_LINK_FLAGS ${OpenMP_C_FLAGS})
   else()
-    set(BLIS_LINK_FLAGS ${OpenMP_CXX_FLAGS})
+    set(BLIS_LINK_FLAGS)
   endif()
   set(BUILT_BLIS FALSE) 
   message(STATUS "Using BLIS found at ${BLIS}")
@@ -124,7 +125,7 @@ elseif(NOT MSVC)
   set(BLIS_LIBS ${BLIS_LIB} ${GNU_ADDONS})
   # If we used the 'auto' configuration, we don't know if BLIS used OpenMP or
   # not, and so we might as well add it as a link flag
-  set(BLIS_LINK_FLAGS ${OpenMP_CXX_FLAGS})
+  set(BLIS_LINK_FLAGS ${OpenMP_C_FLAGS})
   set(HAVE_BLIS TRUE)
   set(BUILT_BLIS TRUE)
 else()

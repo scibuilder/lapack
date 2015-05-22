@@ -432,4 +432,7 @@ list(REMOVE_DUPLICATES ALLOBJ)
 
 add_library(lapack ${ALLOBJ} ${ALLXOBJ})
 target_link_libraries(lapack ${BLAS_LIBRARIES} ${XBLAS_LIBRARY})
+if(BLIS_LINK_FLAGS)
+  set_target_properties(lapack PROPERTIES LINK_FLAGS ${BLIS_LINK_FLAGS})
+endif()
 lapack_install_library(lapack)
