@@ -123,6 +123,11 @@ elseif(USE_OPTIMIZED_BLAS)
       set(BLAS_FOUND TRUE)
       set(BLAS_LIBRARIES ${BLIS_LIBS})
       message(STATUS "Will use BLIS via BLAS_LIBRARIES=${BLAS_LIBRARIES}")
+      if(BLIS_LINK_FLAGS)
+        message(STATUS "Will link BLIS using OpenMP: ${OpenMP_C_FLAGS}")
+      else()
+        message(STATUS "Will *NOT* link BLIS using OpenMP")
+      endif()
     endif()
   endif()
   if(NOT HAVE_BLIS)
@@ -187,13 +192,13 @@ if(NOT LATESTLAPACK_FOUND)
   add_subdirectory(SRC)
 else()
   set(CMAKE_EXE_LINKER_FLAGS 
-    "${CMAKE_EXE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS}" 
+    "${CMAKE_EXE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
     CACHE STRING "Linker flags for executables" FORCE)
   set(CMAKE_MODULE_LINKER_FLAGS 
-    "${CMAKE_MODULE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS}" 
+    "${CMAKE_MODULE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
     CACHE STRING "Linker flags for modules" FORCE)
   set(CMAKE_SHARED_LINKER_FLAGS 
-    "${CMAKE_SHARED_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS}" 
+    "${CMAKE_SHARED_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
     CACHE STRING "Linker flags for shared libs" FORCE)
 endif()
 

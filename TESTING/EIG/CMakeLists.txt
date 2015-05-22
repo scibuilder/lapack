@@ -117,10 +117,13 @@ set(ZEIGTST  zchkee.f
    zsgt01.f zslect.f 
    zstt21.f zstt22.f zunt01.f zunt03.f)
 
-macro(add_eig_executable name )
+macro(add_eig_executable name)
   add_executable(${name} ${ARGN})
   target_link_libraries(${name} tmglib ${LAPACK_LIBRARIES})
-endmacro(add_eig_executable)
+  if(BLIS_LINK_FLAGS)
+    set_target_properties(${name} PROPERTIES LINK_FLAGS ${BLIS_LINK_FLAGS})
+  endif()
+endmacro()
 
 if (BUILD_SINGLE)
 add_eig_executable(xeigtsts ${SEIGTST} ${SCIGTST} ${AEIGTST} 

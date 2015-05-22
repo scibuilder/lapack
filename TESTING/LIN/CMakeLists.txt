@@ -191,10 +191,13 @@ set(ZLINTSTRFP  zchkrfp.f zdrvrfp.f zdrvrf1.f zdrvrf2.f zdrvrf3.f zdrvrf4.f zerr
   zlatb4.f zlaipd.f zlarhs.f zsbmv.f zget04.f zpot01.f zpot03.f zpot02.f 
   chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f )
 
-macro(add_lin_executable name )
+macro(add_lin_executable name)
   add_executable(${name} ${ARGN})
   target_link_libraries(${name} tmglib ${LAPACK_LIBRARIES})
-endmacro(add_lin_executable)
+  if(BLIS_LINK_FLAGS)
+    set_target_properties(${name} PROPERTIES LINK_FLAGS ${BLIS_LINK_FLAGS})
+  endif()
+endmacro()
 
 IF(BUILD_SINGLE)
 add_lin_executable(xlintsts ${ALINTST} ${SCLNTST} ${SLINTST} ${SECOND_SRC} )
