@@ -1,15 +1,17 @@
 cmake_minimum_required(VERSION 2.8)
 project(LAPACK Fortran C)
 
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
+# Add the CMake directory for custon CMake modules
+set(CMAKE_MODULE_PATH "${LAPACK_SOURCE_DIR}/CMAKE" ${CMAKE_MODULE_PATH})
+
 # Configure the warning and code coverage suppression file
 configure_file( 
   "${LAPACK_SOURCE_DIR}/CTestCustom.cmake.in"
   "${LAPACK_BINARY_DIR}/CTestCustom.cmake"
   COPYONLY
 )
-
-# Add the CMake directory for custon CMake modules
-set(CMAKE_MODULE_PATH "${LAPACK_SOURCE_DIR}/CMAKE" ${CMAKE_MODULE_PATH})
 
 if(UNIX)
   if("${CMAKE_Fortran_COMPILER}" MATCHES "ifort")
@@ -253,10 +255,6 @@ else()
   set(CPACK_SOURCE_IGNORE_FILES ~$ .svn ${CPACK_SOURCE_IGNORE_FILES} )
 endif()
 include(CPack)
-
-
-# --------------------------------------------------
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 if(NOT BLAS_FOUND)
   set(ALL_TARGETS ${ALL_TARGETS} blas)
