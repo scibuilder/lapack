@@ -100,9 +100,6 @@ set(PKG_CONFIG_DIR ${libdir}/pkgconfig)
 # --------------------------------------------------
 # Subdirectories that need to be processed
 
-option(USE_OPTIMIZED_BLAS "Whether or not to use an optimized BLAS library instead of included netlib BLAS" ON)
-
-
 # Check the usage of the user provided BLAS libraries
 if(BLAS_LIBRARIES)
   include(CheckFortranFunctionExists)
@@ -113,33 +110,32 @@ if(BLAS_LIBRARIES)
     message(STATUS "--> BLAS supplied by user is WORKING, will use ${BLAS_LIBRARIES}.")
   else()
     message(ERROR "--> BLAS supplied by user is not WORKING, CANNOT USE ${BLAS_LIBRARIES}.")
-    message(ERROR "-->     Will use REFERENCE BLAS (by default)")
-    message(ERROR "-->     Or Correct your BLAS_LIBRARIES entry ")
-    message(ERROR "-->     Or Consider checking USE_OPTIMIZED_BLAS")
   endif()
-# User did not provide a BLAS Library but specified to search for one
-elseif(USE_OPTIMIZED_BLAS)
-  if(NOT DISABLE_BLIS)
-    include(ExternalBLIS)
-    if(HAVE_BLIS)
-      set(BLAS_FOUND TRUE)
-      set(BLAS_LIBRARIES ${BLIS_LIBS})
-      message(STATUS "Will use BLIS via BLAS_LIBRARIES=${BLAS_LIBRARIES}")
-      if(BLIS_LINK_FLAGS)
-        message(STATUS "Will link BLIS using OpenMP: ${OpenMP_C_FLAGS}")
-      else()
-        message(STATUS "Will *NOT* link BLIS using OpenMP")
-      endif()
+endif()
+
+if(NOT DISABLE_BLIS)
+  include(ExternalBLIS)
+  if(HAVE_BLIS)
+    set(BLAS_FOUND TRUE)
+    set(BLAS_LIBRARIES ${BLIS_LIBS})
+    message(STATUS "Will use BLIS via BLAS_LIBRARIES=${BLAS_LIBRARIES}")
+    if(BLIS_LINK_FLAGS)
+      message(STATUS "Will link BLIS using OpenMP: ${OpenMP_C_FLAGS}")
+    else()
+      message(STATUS "Will *NOT* link BLIS using OpenMP")
     endif()
+  elseif(BUILD_BLIS)
+    message(FATAL_ERROR "Demand that BLIS be built could not be fulfilled") 
   endif()
-  if(NOT HAVE_BLIS)
-    find_package(BLAS)
-  endif()
+endif()
+
+if(NOT HAVE_BLIS AND NOT DISABLE_NETLIB_BLAS)
+  find_package(BLAS)
 endif()
 
 # Neither user specified or optimized BLAS libraries can be used
 if(NOT BLAS_FOUND)
-  message(STATUS "Using supplied NETLIB BLAS implementation")
+  message(STATUS "Using NETLIB BLAS implementation")
   add_subdirectory(BLAS)
   set(BLAS_LIBRARIES blas)
 else()
@@ -159,50 +155,13 @@ if(USE_XBLAS)
   find_library(XBLAS_LIBRARY NAMES xblas)
 endif()
    
-option(USE_OPTIMIZED_LAPACK "Whether or not to use an optimized LAPACK library instead of included netlib LAPACK" OFF)
-
-# User did not provide a LAPACK Library but specified to search for one
-if(USE_OPTIMIZED_LAPACK)
-  find_package(LAPACK)
-endif()
-
-# Check the usage of the user provided or automatically found LAPACK libraries
-if(LAPACK_LIBRARIES)
-  include(CheckFortranFunctionExists)
-  set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARIES})
-  # Check if new routine of 3.4.0 is in LAPACK_LIBRARIES
-  CHECK_FORTRAN_FUNCTION_EXISTS("dgeqrt" LATESTLAPACK_FOUND)
-  unset(CMAKE_REQUIRED_LIBRARIES)
-  if(LATESTLAPACK_FOUND)
-    message(STATUS "--> LAPACK supplied by user is WORKING, will use ${LAPACK_LIBRARIES}.")
-  else()
-    message(ERROR "--> LAPACK supplied by user is not WORKING or is older than LAPACK 3.4.0, 	CANNOT USE ${LAPACK_LIBRARIES}.")
-    message(ERROR "-->     Will use REFERENCE LAPACK (by default)")
-    message(ERROR "-->     Or Correct your LAPACK_LIBRARIES entry ")
-    message(ERROR "-->     Or Consider checking USE_OPTIMIZED_LAPACK")
-  endif()
-endif()
-
-# Neither user specified or optimized LAPACK libraries can be used
-if(NOT LATESTLAPACK_FOUND)
-  message(STATUS "Using supplied NETLIB LAPACK implementation")
-  set(LAPACK_LIBRARIES lapack)
-  option(BUILD_SINGLE "Build LAPACK Single Precision" ON)
-  option(BUILD_DOUBLE "Build LAPACK Double Precision" ON)
-  option(BUILD_COMPLEX "Build LAPACK Complex Precision" ON)
-  option(BUILD_COMPLEX16 "Build LAPACK Double Complex Precision" ON)
-  add_subdirectory(SRC)
-else()
-  set(CMAKE_EXE_LINKER_FLAGS 
-    "${CMAKE_EXE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
-    CACHE STRING "Linker flags for executables" FORCE)
-  set(CMAKE_MODULE_LINKER_FLAGS 
-    "${CMAKE_MODULE_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
-    CACHE STRING "Linker flags for modules" FORCE)
-  set(CMAKE_SHARED_LINKER_FLAGS 
-    "${CMAKE_SHARED_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS} ${BLIS_LINK_FLAGS}" 
-    CACHE STRING "Linker flags for shared libs" FORCE)
-endif()
+message(STATUS "Using supplied NETLIB LAPACK implementation")
+set(LAPACK_LIBRARIES lapack)
+option(BUILD_SINGLE "Build LAPACK Single Precision" ON)
+option(BUILD_DOUBLE "Build LAPACK Double Precision" ON)
+option(BUILD_COMPLEX "Build LAPACK Complex Precision" ON)
+option(BUILD_COMPLEX16 "Build LAPACK Double Complex Precision" ON)
+add_subdirectory(SRC)
 
 message(STATUS "BUILD TESTING : ${BUILD_TESTING}" )
 if(BUILD_TESTING)
