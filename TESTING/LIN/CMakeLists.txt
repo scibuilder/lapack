@@ -4,7 +4,7 @@ set(ALINTST
 
 set(SCLNTST slaord.f)
 
-set(DZLNTST dlaord.f )
+set(DZLNTST dlaord.f)
 
 set(SLINTST  schkaa.f 
    schkeq.f schkgb.f schkge.f schkgt.f 
@@ -74,7 +74,7 @@ set(CLINTST  cchkaa.f
    ctpt02.f ctpt03.f ctpt05.f ctpt06.f ctrt01.f 
    ctrt02.f ctrt03.f ctrt05.f ctrt06.f 
    ctzt01.f ctzt02.f sget06.f cgennd.f
-   cqrt04.f cqrt05.f cchkqrt.f cerrqrt.f cchkqrtp.f cerrqrtp.f )
+   cqrt04.f cqrt05.f cchkqrt.f cerrqrt.f cchkqrtp.f cerrqrtp.f)
 
 if(USEXBLAS)
   list(APPEND 
@@ -111,7 +111,7 @@ set(DLINTST  dchkaa.f
    dtpt02.f dtpt03.f dtpt05.f dtpt06.f dtrt01.f 
    dtrt02.f dtrt03.f dtrt05.f dtrt06.f 
    dtzt01.f dtzt02.f dgennd.f
-   dqrt04.f dqrt05.f dchkqrt.f derrqrt.f dchkqrtp.f derrqrtp.f )
+   dqrt04.f dqrt05.f dchkqrt.f derrqrt.f dchkqrtp.f derrqrtp.f)
 
 if(USEXBLAS)
   list(APPEND 
@@ -153,7 +153,7 @@ set(ZLINTST  zchkaa.f
    ztpt02.f ztpt03.f ztpt05.f ztpt06.f ztrt01.f 
    ztrt02.f ztrt03.f ztrt05.f ztrt06.f 
    ztzt01.f ztzt02.f dget06.f zgennd.f
-   zqrt04.f zqrt05.f zchkqrt.f zerrqrt.f zchkqrtp.f zerrqrtp.f )
+   zqrt04.f zqrt05.f zchkqrt.f zerrqrt.f zchkqrtp.f zerrqrtp.f)
 
 if(USEXBLAS)
   list(APPEND
@@ -163,33 +163,39 @@ else()
     ZLINTST  zdrvge.f zdrvgb.f zerrge.f zdrvpo.f zerrpo.f)
 endif()
 
-set(DSLINTST  dchkab.f 
-	ddrvab.f ddrvac.f derrab.f derrac.f dget08.f          
-	alaerh.f alahd.f  aladhd.f alareq.f 
-	chkxer.f dlarhs.f dlatb4.f xerbla.f 
-	dget02.f dpot06.f)
+set(DSLINTST  
+  dchkab.f 
+  ddrvab.f ddrvac.f derrab.f derrac.f dget08.f          
+  alaerh.f alahd.f  aladhd.f alareq.f 
+  chkxer.f dlarhs.f dlatb4.f xerbla.f 
+  dget02.f dpot06.f)
 
-set(ZCLINTST  zchkab.f 
-	zdrvab.f zdrvac.f zerrab.f zerrac.f zget08.f          
-	alaerh.f alahd.f  aladhd.f alareq.f 
-	chkxer.f zget02.f zlarhs.f zlatb4.f 
-	zsbmv.f  xerbla.f zpot06.f zlaipd.f)
+set(ZCLINTST  
+  zchkab.f 
+  zdrvab.f zdrvac.f zerrab.f zerrac.f zget08.f          
+  alaerh.f alahd.f  aladhd.f alareq.f 
+  chkxer.f zget02.f zlarhs.f zlatb4.f 
+  zsbmv.f  xerbla.f zpot06.f zlaipd.f)
 
-set(SLINTSTRFP  schkrfp.f sdrvrfp.f sdrvrf1.f sdrvrf2.f sdrvrf3.f sdrvrf4.f serrrfp.f 
-	slatb4.f slarhs.f sget04.f spot01.f spot03.f spot02.f 
-	chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f )
+set(SLINTSTRFP  
+  schkrfp.f sdrvrfp.f sdrvrf1.f sdrvrf2.f sdrvrf3.f sdrvrf4.f serrrfp.f 
+  slatb4.f slarhs.f sget04.f spot01.f spot03.f spot02.f 
+  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f)
 
-set(DLINTSTRFP  dchkrfp.f ddrvrfp.f ddrvrf1.f ddrvrf2.f ddrvrf3.f ddrvrf4.f derrrfp.f 
-	dlatb4.f dlarhs.f dget04.f dpot01.f dpot03.f dpot02.f 
-	chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f )
+set(DLINTSTRFP  
+  dchkrfp.f ddrvrfp.f ddrvrf1.f ddrvrf2.f ddrvrf3.f ddrvrf4.f derrrfp.f 
+  dlatb4.f dlarhs.f dget04.f dpot01.f dpot03.f dpot02.f 
+  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f)
 
-set(CLINTSTRFP  cchkrfp.f cdrvrfp.f cdrvrf1.f cdrvrf2.f cdrvrf3.f cdrvrf4.f cerrrfp.f 
+set(CLINTSTRFP  
+  cchkrfp.f cdrvrfp.f cdrvrf1.f cdrvrf2.f cdrvrf3.f cdrvrf4.f cerrrfp.f 
   claipd.f clatb4.f clarhs.f csbmv.f cget04.f cpot01.f cpot03.f cpot02.f 
-  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f )
+  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f)
 
-set(ZLINTSTRFP  zchkrfp.f zdrvrfp.f zdrvrf1.f zdrvrf2.f zdrvrf3.f zdrvrf4.f zerrrfp.f 
+set(ZLINTSTRFP  
+  zchkrfp.f zdrvrfp.f zdrvrf1.f zdrvrf2.f zdrvrf3.f zdrvrf4.f zerrrfp.f 
   zlatb4.f zlaipd.f zlarhs.f zsbmv.f zget04.f zpot01.f zpot03.f zpot02.f 
-  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f )
+  chkxer.f xerbla.f alaerh.f aladhd.f alahd.f alasvm.f)
 
 macro(add_lin_executable name)
   add_executable(${name} ${ARGN})
@@ -200,29 +206,29 @@ macro(add_lin_executable name)
 endmacro()
 
 IF(BUILD_SINGLE)
-add_lin_executable(xlintsts ${ALINTST} ${SCLNTST} ${SLINTST} ${SECOND_SRC} )
-add_lin_executable(xlintstrfs ${SLINTSTRFP} ${SECOND_SRC})
+  add_lin_executable(xlintsts ${ALINTST} ${SCLNTST} ${SLINTST} ${SECOND_SRC})
+  add_lin_executable(xlintstrfs ${SLINTSTRFP} ${SECOND_SRC})
 endif()
 
 if(BUILD_DOUBLE)
-add_lin_executable(xlintstd  ${ALINTST} ${DLINTST} ${DZLNTST} ${DSECOND_SRC})
-add_lin_executable(xlintstrfd ${DLINTSTRFP} ${DSECOND_SRC})
+  add_lin_executable(xlintstd  ${ALINTST} ${DLINTST} ${DZLNTST} ${DSECOND_SRC})
+  add_lin_executable(xlintstrfd ${DLINTSTRFP} ${DSECOND_SRC})
 endif()
 
 IF(BUILD_SINGLE AND BUILD_DOUBLE)
-add_lin_executable(xlintstds ${DSLINTST} ${SECOND_SRC} ${DSECOND_SRC} )
+  add_lin_executable(xlintstds ${DSLINTST} ${SECOND_SRC} ${DSECOND_SRC})
 endif()
 
 if(BUILD_COMPLEX)
-add_lin_executable(xlintstc  ${ALINTST} ${CLINTST} ${SCLNTST} ${SECOND_SRC} )
-add_lin_executable(xlintstrfc  ${CLINTSTRFP} ${SECOND_SRC})
+  add_lin_executable(xlintstc  ${ALINTST} ${CLINTST} ${SCLNTST} ${SECOND_SRC})
+  add_lin_executable(xlintstrfc  ${CLINTSTRFP} ${SECOND_SRC})
 endif()
 
 if(BUILD_COMPLEX16)
-add_lin_executable(xlintstz  ${ALINTST} ${ZLINTST} ${DZLNTST} ${DSECOND_SRC})
-add_lin_executable(xlintstrfz ${ZLINTSTRFP} ${DSECOND_SRC})
+  add_lin_executable(xlintstz  ${ALINTST} ${ZLINTST} ${DZLNTST} ${DSECOND_SRC})
+  add_lin_executable(xlintstrfz ${ZLINTSTRFP} ${DSECOND_SRC})
 endif()
 
 IF(BUILD_COMPLEX AND BUILD_COMPLEX16)
-add_lin_executable(xlintstzc ${ZCLINTST} ${SECOND_SRC} ${DSECOND_SRC} )
+  add_lin_executable(xlintstzc ${ZCLINTST} ${SECOND_SRC} ${DSECOND_SRC})
 endif()
