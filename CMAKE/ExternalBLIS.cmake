@@ -56,7 +56,7 @@ else()
   set(GNU_ADDONS)
 endif()
 
-if(NOT BUILD_BLIS)
+if(NOT FORCE_BLIS_BUILD)
   find_library(BLIS NAMES blis PATHS ${MATH_PATHS})
   if(BLIS)
     set(CMAKE_REQUIRED_LINKER_FLAGS)
