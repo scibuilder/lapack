@@ -84,7 +84,7 @@ if(HAVE_BLIS)
   message(STATUS "Using BLIS found at ${BLIS}")
 elseif(NOT MSVC)
   if(NOT DEFINED BLIS_URL)
-    set(BLIS_URL https://github.com/poulson/blis.git)
+    set(BLIS_URL https://github.com/scibuilder/blis.git)
   endif()
   message(STATUS "Will pull BLIS from ${BLIS_URL}")
 
